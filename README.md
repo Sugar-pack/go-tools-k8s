@@ -1,6 +1,7 @@
 # Minikube Deployment Guide
 
-This guide provides step-by-step instructions to deploy a Go application to a local Kubernetes cluster using Minikube with 3 replicas.
+This guide provides step-by-step instructions to deploy a Go application to a local Kubernetes cluster
+using Minikube with 3 replicas and access the pprof server of one of the pods.
 
 ## Prerequisites
 
