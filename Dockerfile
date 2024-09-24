@@ -7,20 +7,27 @@ WORKDIR /app
 # Copy the rest of the application code
 COPY . .
 
-# Build the Go application
-RUN go build -o main .
+# Install Delve (dlv) for debugging
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
 
-# Use a minimal base image to run the application
-FROM scratch
+# Build the Go application with debugging flags (disable optimizations and inlining)
+RUN go build -gcflags="all=-N -l" -o main .
+
+# Use a minimal base image to run the application. Why not scratch? Because we need the shell for debugging
+FROM alpine:3.16
 
 # Set the working directory inside the container
 WORKDIR /root/
 
 # Copy the compiled Go binary from the builder stage
 COPY --from=builder /app/main .
+COPY --from=builder /go/bin/dlv /usr/local/bin/dlv
 
-# Expose port 8080 to the outside
+# Expose the application port
 EXPOSE 8080
 
-# Run the compiled Go binary
-CMD ["./main"]
+# Expose the Delve debugging port
+EXPOSE 40000
+
+# Run Delve in headless mode to debug the Go app
+CMD ["dlv", "exec", "./main", "--headless", "--listen=:40000", "--api-version=2", "--accept-multiclient", "--continue"]

@@ -1,7 +1,7 @@
 # Minikube Deployment Guide
 
 This guide provides step-by-step instructions to deploy a Go application to a local Kubernetes cluster
-using Minikube with 3 replicas and access the pprof server of one of the pods.
+using Minikube with 3 replicas and access the pprof/debug server of one of the pods.
 
 ## Prerequisites
 
@@ -45,7 +45,13 @@ Check the status of the deployment:
 kubectl get deployments
 ```
 
-### 5. Access the pprof server of certain pod (3 replicas, so you can choose any pod)
+### 5. Access the pprof/debug server of certain pod (3 replicas, so you can choose any pod)
+To list all pods:
+
+```bash
+kubectl get pods
+```
+
 In our application pprof server is running on port 6060
 
 ```bash
@@ -53,3 +59,10 @@ kubectl port-forward <pod-name> 6060:6060
 ```
 
 and then access the pprof server on `localhost:6060/debug/pprof/`
+
+Debug server is running on port 40000
+    
+```bash
+kubectl port-forward <pod-name> 40000:40000
+```
+Access to debug server depends on ide/editor that you use.

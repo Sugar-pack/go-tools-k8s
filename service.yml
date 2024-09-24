@@ -15,3 +15,7 @@ spec:
       port: 6060
       targetPort: 6060
       name: pprof
+    - protocol: TCP
+      port: 40000
+      targetPort: 40000
+      name: delve-debug
