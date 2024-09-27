@@ -21,6 +21,7 @@ minikube start
 ```
 
 ### 2. Build the Docker Image
+
 Use Minikube's Docker environment to build the image:
 
 ```bash
@@ -45,14 +46,17 @@ Check the status of the deployment:
 kubectl get deployments
 ```
 
-### 5. Access the pprof/debug server of certain pod (3 replicas, so you can choose any pod)
+### 5. Choose pod to inspect (3 replicas, so you can choose any pod)
+
 To list all pods:
 
 ```bash
 kubectl get pods
 ```
 
-In our application pprof server is running on port 6060
+### 6. Access the pprof server
+
+Pprof server is running on port 6060
 
 ```bash
 kubectl port-forward <pod-name> 6060:6060
@@ -60,9 +64,12 @@ kubectl port-forward <pod-name> 6060:6060
 
 and then access the pprof server on `localhost:6060/debug/pprof/`
 
+### 7. Access the debug server
+
 Debug server is running on port 40000
-    
+
 ```bash
 kubectl port-forward <pod-name> 40000:40000
 ```
+
 Access to debug server depends on ide/editor that you use.

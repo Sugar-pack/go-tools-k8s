@@ -1,3 +1,3 @@
-module github.com/Sugar-pack/pprof-k8s
+module github.com/Sugar-pack/go-tools-k8s
 
 go 1.23.0
